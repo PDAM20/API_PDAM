@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      tb_pelanggan.belongsTo(models.tb_kelainan, {foreignKey : 'id_kelainan'});
     }
   }
   tb_pelanggan.init({

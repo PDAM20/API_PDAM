@@ -9,7 +9,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       id_kelainan: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+        references: {
+          model: "tb_kelainans",
+          key: "id",
+        }
       },
       kode_pelanggan: {
         type: Sequelize.STRING
