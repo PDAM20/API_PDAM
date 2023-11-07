@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     kode_pelanggan: DataTypes.STRING,
     nama: DataTypes.STRING,
     alamat: DataTypes.TEXT,
+    gambar_meter: DataTypes.STRING,
+    gambar_home: DataTypes.STRING,
+    video_meter: DataTypes.STRING,
     air_sl: DataTypes.INTEGER,
     air_habis: DataTypes.INTEGER,
     rayon: DataTypes.STRING

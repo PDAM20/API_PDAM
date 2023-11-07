@@ -24,6 +24,15 @@ module.exports = {
       alamat: {
         type: Sequelize.TEXT
       },
+      gambar_meter: {
+        type: Sequelize.STRING
+      },
+      gambar_rumah: {
+        type: Sequelize.STRING
+      },
+      video_meter: {
+        type: Sequelize.STRING
+      },
       air_sl: {
         type: Sequelize.INTEGER
       },
