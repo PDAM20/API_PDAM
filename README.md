@@ -56,17 +56,21 @@ This project was made to fullfill Kampus Merdeka - Studi Independen - Intro to N
    ```
 3. Run Migration
    ```sh
-   npx seqeulize db:migrate
+   npx sequelize db:migrate
    ```
-4. Undo Migration
+4. Run Seeder
    ```sh
-   npx seqeulize db:migrate:undo:all
+   npx sequelize db:seed:all
    ```
-5. Running the Program
+5. Undo Migration
+   ```sh
+   npx sequelize db:migrate:undo:all
+   ```
+6. Running the Program
    ```sh
    node app.js
    ```
-6. Test the API
+7. Test the API
    ```sh
    Import Documentation API to Insomnia
    ```
