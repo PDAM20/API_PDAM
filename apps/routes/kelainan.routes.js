@@ -1,5 +1,5 @@
 const router        = require('express').Router();
-const controller    = require('../controller/kelainan.controller');
+const controller    = require('../controllers/kelainan.controller');
 
 router.get('/', controller.getAll);
 router.get('/:id', controller.getDetail);

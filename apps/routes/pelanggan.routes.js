@@ -1,5 +1,5 @@
 const router        = require('express').Router();
-const controller    = require('../controller/pelanggan.controller');
+const controller    = require('../controllers/pelanggan.controller');
 
 router.get('/', controller.getAll);
 router.get('/:id', controller.getDetail);

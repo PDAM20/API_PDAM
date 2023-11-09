@@ -1,4 +1,10 @@
 const { tb_pelanggan, tb_kelainan }     = require('../../models');
+const multer = require('multer');
+const upload = require('../helper/multer').fields([
+  { name: 'gambar_meter', maxCount: 1 },
+  { name: 'gambar_rumah', maxCount: 1 },
+  { name: 'video_meter', maxCount: 1 },
+]);
 
 module.exports = class PelangganController {
   static async getAll(req, res, next) {
@@ -80,40 +86,61 @@ module.exports = class PelangganController {
   }
 
   static async updatePelanggan(req, res, next) {
-    try {
-      const id = req.params.id;
-      const { id_kelainan, kode_pelanggan, nama, alamat, air_sl, air_habis, rayon } = req.body;
-  
-      const dt = await tb_pelanggan.findOne({ where: { id: id } });
-      if (dt == null) {
-        return res.status(404).json({
-          success: false,
-          message: "data not found"
+    upload(req, res, async function (err) {
+      try {
+        const id = req.params.id;
+        const { id_kelainan } = req.body;
+        
+        if (err instanceof multer.MulterError) {
+          // A Multer error occurred when uploading.
+          return res.status(422).json({
+            success: false,
+            message: err.message
+          })
+        } else if (err) {
+          // An unknown error occurred when uploading.
+          return res.status(422).json({
+            success: false,
+            message: err.message
+          })
+        }
+        
+        
+        const dt = await tb_pelanggan.findOne({ where: { id: id } });
+        if (dt == null) {
+          return res.status(404).json({
+            success: false,
+            message: "data not found"
+          });
+        }
+        
+        const data = await tb_kelainan.findOne({ where: { id: id_kelainan }})
+        if (data == null) {
+          return res.status(404).json({
+            success: false,
+            message: `kelainan with id ${id_kelainan} is empty`
+          })
+        }
+        
+        let urls = req.files
+        for (const url in urls) {
+          let urlTmp = urls[url][0].path.split('\\')
+          urlTmp.shift()
+          dt[url] = urlTmp.join('/')
+          await dt.save();
+        }
+        
+        return res.status(200).json({
+          success: true,
+          message: "success update"
         });
+      } catch (error) {
+        console.error(error.message);
+        next(error); 
       }
   
-      const data = await tb_kelainan.findOne({ where: { id: id_kelainan }})
-      if (data == null) {
-        return res.status(404).json({
-          success: false,
-          message: `kelainan with id ${id_kelainan} is empty`
-        })
-      }
-      await tb_pelanggan.update({ id_kelainan, kode_pelanggan, nama, alamat, air_sl, air_habis, rayon },
-        {
-          where: {
-            id: id
-          }
-        });
-  
-      return res.status(200).json({
-        success: true,
-        message: "success update"
-      });
-    } catch (error) {
-      console.error(error.message);
-      next(error); // Pass the error to the error handling middleware
-    }
+      // Everything went fine.
+    })
   }
   
 
