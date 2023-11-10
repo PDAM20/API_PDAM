@@ -89,22 +89,19 @@ module.exports = class PelangganController {
     upload(req, res, async function (err) {
       try {
         const id = req.params.id;
-        const { id_kelainan } = req.body;
+        const { id_kelainan, nama, air_sl, air_habis } = req.body;
         
         if (err instanceof multer.MulterError) {
-          // A Multer error occurred when uploading.
           return res.status(422).json({
             success: false,
             message: err.message
           })
         } else if (err) {
-          // An unknown error occurred when uploading.
           return res.status(422).json({
             success: false,
             message: err.message
           })
         }
-        
         
         const dt = await tb_pelanggan.findOne({ where: { id: id } });
         if (dt == null) {
@@ -127,9 +124,15 @@ module.exports = class PelangganController {
           let urlTmp = urls[url][0].path.split('\\')
           urlTmp.shift()
           dt[url] = urlTmp.join('/')
+          console.log("disini " + dt[url]);
           await dt.save();
         }
-        
+
+        await tb_pelanggan.update({id_kelainan, nama, air_sl, air_habis}, {
+          where: {
+            id: id
+          }})
+
         return res.status(200).json({
           success: true,
           message: "success update"
