@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('tb_petugas', {
+    await queryInterface.createTable('diameters', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,22 +11,11 @@ module.exports = {
       nama: {
         type: Sequelize.STRING
       },
-      alamat: {
-        type: Sequelize.TEXT
+      by_pemeliaharaan: {
+        type: Sequelize.INTEGER
       },
-      no_telp: {
-        type: Sequelize.STRING
-      },
-      username: {
-        type: Sequelize.STRING
-      },
-      password: {
-        type: Sequelize.STRING
-      },
-      status: {
-        type: Sequelize.ENUM,
-        values: ['aktif', 'nonaktif'],
-        allowNull: false
+      by_administrasi: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -39,6 +28,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('tb_petugas');
+    await queryInterface.dropTable('diameters');
   }
 };

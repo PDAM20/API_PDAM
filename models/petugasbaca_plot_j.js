@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class tb_petugas extends Model {
+  class petugasbaca_plot_j extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,18 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  tb_petugas.init({
-    nama: DataTypes.STRING,
-    alamat: DataTypes.TEXT,
-    no_telp: DataTypes.STRING,
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
-    status: DataTypes.ENUM({
-      values: ['pria', 'wanita']
-    }),
+  petugasbaca_plot_j.init({
+    petugas_id: DataTypes.INTEGER,
+    jalan_id: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'tb_petugas',
+    modelName: 'petugasbaca_plot_j',
   });
-  return tb_petugas;
+  return petugasbaca_plot_j;
 };

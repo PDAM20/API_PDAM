@@ -1,0 +1,112 @@
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class hasilbaca extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+    }
+  }
+  hasilbaca.init({
+    no_pelanggan: DataTypes.STRING,
+    periode: DataTypes.STRING,
+    nama: DataTypes.STRING,
+    alamat: DataTypes.STRING,
+    kec_id: DataTypes.INTEGER,
+    kec: DataTypes.STRING,
+    kel_id: DataTypes.INTEGER,
+    kel: DataTypes.STRING,
+    rayon_id: DataTypes.INTEGER,
+    kode_rayon: DataTypes.STRING,
+    rayon: DataTypes.STRING,
+    jalan_id: DataTypes.INTEGER,
+    jalan: DataTypes.STRING,
+    wilayah_id: DataTypes.STRING,
+    wilayah: DataTypes.STRING,
+    diameter_id: DataTypes.INTEGER,
+    diameter: DataTypes.STRING,
+    gol_id: DataTypes.INTEGER,
+    kodegol: DataTypes.STRING,
+    golongan: DataTypes.STRING,
+    gol_id_baru: DataTypes.INTEGER,
+    kodegol_baru: DataTypes.STRING,
+    golongan_baru: DataTypes.STRING,
+    perubahangol: DataTypes.TINYINT,
+    merek_id: DataTypes.INTEGER,
+    merek_meter: DataTypes.STRING,
+    merek_id_baru: DataTypes.INTEGER,
+    merek_meter_baru: DataTypes.STRING,
+    perubahanmeter: DataTypes.TINYINT,
+    stanlalu: DataTypes.INTEGER,
+    stanskrg: DataTypes.INTEGER,
+    pakaiskrg: DataTypes.INTEGER,
+    urutanbaca: DataTypes.INTEGER,
+    stanangkat: DataTypes.INTEGER,
+    persen: DataTypes.DECIMAL,
+    harga_air: DataTypes.INTEGER,
+    airlimbah: DataTypes.INTEGER,
+    administrasi: DataTypes.INTEGER,
+    pemeliharaan: DataTypes.INTEGER,
+    retribusi: DataTypes.INTEGER,
+    pelayanan: DataTypes.INTEGER,
+    meterai: DataTypes.INTEGER,
+    totalrekening: DataTypes.INTEGER,
+    sudahbaca: DataTypes.TINYINT,
+    verifikasi: DataTypes.TINYINT,
+    flagbacamanual: DataTypes.TINYINT,
+    flagkoreksi: DataTypes.TINYINT,
+    adafotorumah: DataTypes.TINYINT,
+    adavideo: DataTypes.TINYINT,
+    flagsudahupload: DataTypes.TINYINT,
+    flagaktif: DataTypes.TINYINT,
+    flagreq_bc_ulang: DataTypes.TINYINT,
+    stan_req_bc_ulang: DataTypes.INTEGER,
+    petugas_id_plot: DataTypes.INTEGER,
+    petugas_plot: DataTypes.STRING,
+    petugas_id_baca: DataTypes.INTEGER,
+    petugas_baca: DataTypes.STRING,
+    kelainan_id: DataTypes.INTEGER,
+    kelainan: DataTypes.STRING,
+    datalapangan: DataTypes.INTEGER,
+    waktuverifikasi: DataTypes.DATE,
+    waktubaca: DataTypes.DATE,
+    waktubacalalu: DataTypes.DATE,
+    waktuupload: DataTypes.DATE,
+    iduserkoreksi: DataTypes.INTEGER,
+    userkoreksi: DataTypes.STRING,
+    iduserverifikasi: DataTypes.INTEGER,
+    userverifikasi: DataTypes.STRING,
+    latitude: DataTypes.STRING,
+    longitude: DataTypes.STRING,
+    memolapangan: DataTypes.STRING,
+    keterangan: DataTypes.STRING,
+    bln1: DataTypes.STRING,
+    stan1: DataTypes.INTEGER,
+    pakai1: DataTypes.INTEGER,
+    persen1: DataTypes.DECIMAL,
+    bln2: DataTypes.STRING,
+    stan2: DataTypes.INTEGER,
+    pakai2: DataTypes.INTEGER,
+    persen2: DataTypes.DECIMAL,
+    bln3: DataTypes.STRING,
+    stan3: DataTypes.INTEGER,
+    pakai3: DataTypes.INTEGER,
+    persen3: DataTypes.DECIMAL,
+    kelainan1: DataTypes.STRING,
+    kelainan2: DataTypes.STRING,
+    kelainan3: DataTypes.STRING,
+    rtrt3bln_pakai: DataTypes.INTEGER,
+    rtrt3bln_persen: DataTypes.DECIMAL,
+    masterlatlong: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'hasilbaca',
+  });
+  return hasilbaca;
+};
