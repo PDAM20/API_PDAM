@@ -23,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     folderbackup: DataTypes.STRING,
     bolehbc2step: DataTypes.TINYINT,
     bolehbcbarcode: DataTypes.TINYINT,
-    bolehbcldigit: DataTypes.TINYINT,
-    bolehbcldatabase: DataTypes.TINYINT,
+    bolehbclastdigit: DataTypes.TINYINT,
+    bolehbcdatabase: DataTypes.TINYINT,
     strictbcbylatlong: DataTypes.TINYINT,
     strictbcgps: DataTypes.TINYINT,
     rutebyrayon: DataTypes.TINYINT

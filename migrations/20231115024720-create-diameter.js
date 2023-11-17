@@ -11,7 +11,7 @@ module.exports = {
       nama: {
         type: Sequelize.STRING
       },
-      by_pemeliaharaan: {
+      by_pemeliharaan: {
         type: Sequelize.INTEGER
       },
       by_administrasi: {

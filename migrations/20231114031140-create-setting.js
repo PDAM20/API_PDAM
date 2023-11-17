@@ -35,10 +35,10 @@ module.exports = {
       bolehbcbarcode: {
         type: Sequelize.TINYINT
       },
-      bolehbcldigit: {
+      bolehbclastdigit: {
         type: Sequelize.TINYINT
       },
-      bolehbcldatabase: {
+      bolehbcdatabase: {
         type: Sequelize.TINYINT
       },
       strictbcbylatlong: {

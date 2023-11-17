@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   diameter.init({
     nama: DataTypes.STRING,
-    by_pemeliaharaan: DataTypes.INTEGER,
+    by_pemeliharaan: DataTypes.INTEGER,
     by_administrasi: DataTypes.INTEGER
   }, {
     sequelize,
