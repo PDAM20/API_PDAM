@@ -8,6 +8,7 @@ const port              = process.env.PORT || 3000;
 const AuthRouter        = require('./apps/routes/auth.routes');
 const PelangganRouter   = require('./apps/routes/pelanggan.routes');
 const KelainanRouter    = require('./apps/routes/kelainan.routes');
+const MateraiRouter    = require('./apps/routes/materai.routes');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/v1/auth', AuthRouter);
 app.use('/v1/pelanggan', PelangganRouter);
 app.use('/v1/kelainan', KelainanRouter);
+app.use('/v1/materai', MateraiRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({
