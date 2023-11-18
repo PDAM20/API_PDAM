@@ -47,9 +47,9 @@ module.exports = class kelainanController {
 
   static async createKelainan(req,res, next) {
     try {
-      const { nama_kelainan } = req.body;
+      const { nama_kelainan, keterangan, is_taksir } = req.body;
       
-      await Kelainan.create({nama_kelainan})
+      await Kelainan.create({nama_kelainan, keterangan, is_taksir})
       .catch((err) => {
         return res.status(400).json({
           success: false,
