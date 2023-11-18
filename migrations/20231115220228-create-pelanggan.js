@@ -64,7 +64,6 @@ module.exports = {
       },
       merek_id: {
         type: Sequelize.INTEGER,
-          allowNull: false,
           defaultValue: null,
           references: {
             model: "merek_meters",

@@ -1,12 +1,12 @@
-const { tb_kelainan }       = require('../../models');
+const { Kelainan }       = require('../../models');
 
 module.exports = class kelainanController {
   static async getAll(req, res, next) {
     try {
       const option = {
-        attributes: ['id', 'nama_kelainan']
+        attributes: ['id', 'nama']
       }
-      const data = await tb_kelainan.findAll(option)
+      const data = await Kelainan.findAll(option)
       
       return res.status(200).json({
         success: true,
@@ -22,7 +22,7 @@ module.exports = class kelainanController {
   static async getDetail(req, res, next) {
     try {
       const id = req.params.id;
-      const data = await tb_kelainan.findOne({
+      const data = await Kelainan.findOne({
         where: {
           id: id
         }})
@@ -49,7 +49,7 @@ module.exports = class kelainanController {
     try {
       const { nama_kelainan } = req.body;
       
-      await tb_kelainan.create({nama_kelainan})
+      await Kelainan.create({nama_kelainan})
       .catch((err) => {
         return res.status(400).json({
           success: false,
@@ -70,9 +70,9 @@ module.exports = class kelainanController {
   static async updateKelainan(req,res, next) {
     try {
       const id = req.params.id
-      const { nama_kelainan, keterangan } = req.body;
+      const { nama_kelainan, keterangan, is_taksir } = req.body;
       
-      const dt = await tb_kelainan.findOne({ where: { id: id }})
+      const dt = await Kelainan.findOne({ where: { id: id }})
       if (dt == null) {
         return res.status(404).json({
           success: false,
@@ -80,7 +80,7 @@ module.exports = class kelainanController {
         })
       }
 
-      await tb_kelainan.update({nama_kelainan, keterangan}, {
+      await Kelainan.update({nama_kelainan, keterangan, is_taksir}, {
         where: {
           id: id
         }})
@@ -99,7 +99,7 @@ module.exports = class kelainanController {
     try {
       const id = req.params.id;
 
-      const dt = await tb_kelainan.findOne({ where: { id: id }})
+      const dt = await Kelainan.findOne({ where: { id: id }})
       if (dt == null) {
         return res.status(404).json({
           success: false,
@@ -107,7 +107,7 @@ module.exports = class kelainanController {
         })
       }
 
-      await tb_kelainan.destroy({where: { id: id }})
+      await Kelainan.destroy({where: { id: id }})
       return res.status(200).json({
         success: true,
         message: "success delete"
