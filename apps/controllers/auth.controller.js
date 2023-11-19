@@ -1,4 +1,4 @@
-const { petugasbacas }      = require('../../models');
+const { petugasbaca }      = require('../../models');
 const bcrypt              = require('bcrypt');
 const jwt                 = require('jsonwebtoken');
 
@@ -8,7 +8,8 @@ module.exports = class AuthController {
     try {
       const {username, password} = req.body;
 
-      const User = await petugasbacas.findOne({where: { username }});
+      const User = await petugasbaca.findOne({where: { username }});
+      console.log(User);
       // Cek user di database
       if (User == null) {
         return res.status(404).json({
