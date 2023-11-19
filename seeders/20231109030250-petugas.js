@@ -10,7 +10,7 @@ module.exports = {
         no_telp: '082333529181',
         username: 'budi',
         password: hash,
-        status: 'aktif',
+        aktif: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }], {});
