@@ -4,8 +4,8 @@ const bcrypt = require('bcrypt');
 module.exports = {
   async up (queryInterface, Sequelize) {
       const hash = await bcrypt.hash('budi123', 10);
-      await queryInterface.bulkInsert('tb_petugas', [{
-        nama: 'BUDI SANTOSO',
+      await queryInterface.bulkInsert('petugasbacas', [{
+        nama: 'BUDI SANTOSO NAMAEWA',
         alamat: 'BHAYAM WURUK NO 5 KOTA PROBOLINGGO',
         no_telp: '082333529181',
         username: 'budi',
@@ -17,6 +17,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('tb_petugas', null, {});
+    await queryInterface.bulkDelete('petugasbacas', null, {});
   }
 };
