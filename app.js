@@ -11,6 +11,7 @@ const KelainanRouter    = require('./apps/routes/kelainan.routes');
 const MateraiRouter    = require('./apps/routes/materai.routes');
 const SettingRouter    = require('./apps/routes/setting.routes');
 const SK_TarifRouter    = require('./apps/routes/sktarif.routes');
+const GolonganRouter    = require('./apps/routes/golongan.routes');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/v1/kelainan', KelainanRouter);
 app.use('/v1/materai', MateraiRouter);
 app.use('/v1/setting', SettingRouter);
 app.use('/v1/sk-tarif', SK_TarifRouter);
+app.use('/v1/golongan', GolonganRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({
