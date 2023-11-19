@@ -1,4 +1,4 @@
-const { golongan }       = require('../../models');
+const { golongan, sktarif }       = require('../../models');
 
 module.exports = class GolonganController {
   static async getAll(req, res, next) {
@@ -46,14 +46,19 @@ module.exports = class GolonganController {
     try {
       const { kode_golongan, nama, kode_akun, administrasi, pemeliharaan, denda1, persendenda1, denda2, denda3, minpakai, idsktarif, retribusi, pelayanan } = req.body;
       
-      await golongan.create({kode_golongan, nama, kode_akun, administrasi, pemeliharaan, denda1, persendenda1, denda2, denda3, minpakai, idsktarif, retribusi, pelayanan})
-      .catch((err) => {
-        return res.status(400).json({
-          success: false,
-          message: err.message
-        })
-      })
+      const data = await sktarif.findOne({
+        where: {
+          id: idsktarif
+        }})
 
+      if (!data) {
+        return res.status(404).json({
+          success: false,
+          message: `Sk tarif with id ${idsktarif} is empty`
+        })
+      }
+
+      await golongan.create({kode_golongan, nama, kode_akun, administrasi, pemeliharaan, denda1, persendenda1, denda2, denda3, minpakai, idsktarif, retribusi, pelayanan})
       return res.status(200).json({
         success: true,
         message: "succcess create"
@@ -91,6 +96,7 @@ module.exports = class GolonganController {
       next(error);
     }
   }
+
   static async delete(req, res, next) {
     try {
       const id = req.params.id;
