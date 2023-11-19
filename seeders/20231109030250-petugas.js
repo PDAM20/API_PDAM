@@ -3,11 +3,11 @@ const bcrypt = require('bcrypt');
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-      const hash = await bcrypt.hash('budi123', 10);
+      const hash = await bcrypt.hash('budi', 10);
       await queryInterface.bulkInsert('petugasbacas', [{
-        nama: 'BUDI SANTOSO NAMAEWA',
+        nama: 'BUDI SATRIYA NAMAEWA',
         alamat: 'BHAYAM WURUK NO 5 KOTA PROBOLINGGO',
-        no_telp: '082333529181',
+        no_telp: '089333529121',
         username: 'budi',
         password: hash,
         aktif: 1,
