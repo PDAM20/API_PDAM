@@ -1,4 +1,4 @@
-const { tb_petugas }      = require('../../models');
+const { petugasbacas }      = require('../../models');
 const bcrypt              = require('bcrypt');
 const jwt                 = require('jsonwebtoken');
 
@@ -8,7 +8,7 @@ module.exports = class AuthController {
     try {
       const {username, password} = req.body;
 
-      const User = await tb_petugas.findOne({where: { username }});
+      const User = await petugasbacas.findOne({where: { username }});
       // Cek user di database
       if (User == null) {
         return res.status(404).json({
@@ -20,7 +20,7 @@ module.exports = class AuthController {
           id: User.id,
           nama: User.nama,
           alamat: User.alamat,
-          status: User.status
+          aktif: User.aktif
         }
         
         // Cek password di database
@@ -48,31 +48,31 @@ module.exports = class AuthController {
   }
 
 
-  static async changePassword(req, res, next) {
-    try {
-      const { password } = req.body;
-      const { email } = req.params;
+  // static async changePassword(req, res, next) {
+  //   try {
+  //     const { password } = req.body;
+  //     const { email } = req.params;
 
-      const data = await user.findOne({ email: email });
-      if (!data) {
-        return res.status(404).json({
-          success: false,
-          message: "user not found"
-        })
-      }
-      const hash = await bcrypt.hash(password, 10);
-      await user.update({ password: hash}, {
-        where: {
-          email: email
-        }
-      })
+  //     const data = await user.findOne({ email: email });
+  //     if (!data) {
+  //       return res.status(404).json({
+  //         success: false,
+  //         message: "user not found"
+  //       })
+  //     }
+  //     const hash = await bcrypt.hash(password, 10);
+  //     await user.update({ password: hash}, {
+  //       where: {
+  //         email: email
+  //       }
+  //     })
 
-      return res.status(200).json({
-        success: true,
-        message: 'Seccess update password'
-      })
-    } catch (error) {
-      next(error);
-    }
-  }
+  //     return res.status(200).json({
+  //       success: true,
+  //       message: 'Seccess update password'
+  //     })
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
 }
