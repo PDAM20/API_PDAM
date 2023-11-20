@@ -1,5 +1,5 @@
 const router        = require('express').Router();
-const controller    = require('../controllers/tarif.controller');
+const controller    = require('../controllers/wilayah.controller');
 
 router.get('/', controller.getAll);
 router.get('/:id', controller.getDetail);
