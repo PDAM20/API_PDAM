@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      rayon.belongsTo(models.wilayah, {foreignKey : 'wilayah_id'});
     }
   }
   rayon.init({
