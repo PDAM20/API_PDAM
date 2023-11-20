@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      merek_meter.hasMany(models.pelanggan, {foreignKey : 'merek_id'});
     }
   }
   merek_meter.init({
