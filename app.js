@@ -14,6 +14,9 @@ const SK_TarifRouter    = require('./apps/routes/sktarif.routes');
 const GolonganRouter    = require('./apps/routes/golongan.routes');
 const TarifRouter       = require('./apps/routes/tarif.routes');
 const WilayahRouter     = require('./apps/routes/wilayah.routes');
+const JalanRouter       = require('./apps/routes/jalan.routes');
+const RayonRouter       = require('./apps/routes/rayon.routes');
+const MerekMeterRouter  = require('./apps/routes/merekmeter.routes');
 
 const app = express();
 
@@ -34,6 +37,9 @@ app.use('/v1/sk-tarif', SK_TarifRouter);
 app.use('/v1/golongan', GolonganRouter);
 app.use('/v1/tarif', TarifRouter);
 app.use('/v1/wilayah', WilayahRouter);
+app.use('/v1/jalan', JalanRouter);
+app.use('/v1/rayon', RayonRouter);
+app.use('/v1/merek-meter', MerekMeterRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({
