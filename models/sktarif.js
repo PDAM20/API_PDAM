@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      sktarif.hasMany(models.golongan, {foreignKey : 'idsktarif'})
     }
   }
   sktarif.init({
