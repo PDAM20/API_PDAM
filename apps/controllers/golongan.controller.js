@@ -3,7 +3,12 @@ const { golongan, sktarif }       = require('../../models');
 module.exports = class GolonganController {
   static async getAll(req, res, next) {
     try {
-      const data = await golongan.findAll()
+      const data = await golongan.findAll({
+        include: [{
+          model: sktarif,
+          attributes: ['tahun', 'nomor_sk', 'aktif']
+        }]
+      })
       
       return res.status(200).json({
         success: true,
@@ -22,7 +27,11 @@ module.exports = class GolonganController {
       const data = await golongan.findOne({
         where: {
           id: id
-        }})
+        },  
+        include: [{
+          model: sktarif,
+          attributes: ['tahun', 'nomor_sk', 'aktif']
+        }]})
 
       if (!data) {
         return res.status(404).json({
