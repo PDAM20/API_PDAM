@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Register routes
-app.use('/v1/auth', AuthRouter);
+app.use('/v1/login', AuthRouter);
 app.use('/v1/pelanggan', PelangganRouter);
 app.use('/v1/kelainan', KelainanRouter);
 app.use('/v1/materai', MateraiRouter);

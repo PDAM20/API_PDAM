@@ -9,7 +9,6 @@ module.exports = class AuthController {
       const {username, password} = req.body;
 
       const User = await petugasbaca.findOne({where: { username }});
-      console.log(User);
       // Cek user di database
       if (User == null) {
         return res.status(404).json({
