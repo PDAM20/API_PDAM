@@ -24,7 +24,7 @@ module.exports = class MateraiController {
   static async getDetail(req, res, next) {
     try {
       const id = req.params.id;
-      const data = await Materai.findOne({
+      const data = await tarif.findOne({
         where: {
           id: id
         }, 
@@ -55,7 +55,7 @@ module.exports = class MateraiController {
     try {
       const { golongan_id, min, max, harga, istetap } = req.body;
       
-      await Materai.create({golongan_id, min, max, harga, istetap})
+      await tarif.create({golongan_id, min, max, harga, istetap})
       .catch((err) => {
         return res.status(400).json({
           success: false,
@@ -78,7 +78,7 @@ module.exports = class MateraiController {
       const id = req.params.id
       const { golongan_id, min, max, harga, istetap } = req.body;
       
-      const dt = await Materai.findOne({ where: { id: id }})
+      const dt = await tarif.findOne({ where: { id: id }})
       if (dt == null) {
         return res.status(404).json({
           success: false,
@@ -86,7 +86,7 @@ module.exports = class MateraiController {
         })
       }
 
-      await Materai.update({golongan_id, min, max, harga, istetap}, {
+      await tarif.update({golongan_id, min, max, harga, istetap}, {
         where: {
           id: id
         }})
@@ -104,7 +104,7 @@ module.exports = class MateraiController {
     try {
       const id = req.params.id;
 
-      const dt = await Materai.findOne({ where: { id: id }})
+      const dt = await tarif.findOne({ where: { id: id }})
       if (dt == null) {
         return res.status(404).json({
           success: false,
@@ -112,7 +112,7 @@ module.exports = class MateraiController {
         })
       }
 
-      await Materai.destroy({where: { id: id }})
+      await tarif.destroy({where: { id: id }})
       return res.status(200).json({
         success: true,
         message: "success delete"
