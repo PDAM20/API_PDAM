@@ -17,6 +17,9 @@ const WilayahRouter     = require('./apps/routes/wilayah.routes');
 const JalanRouter       = require('./apps/routes/jalan.routes');
 const RayonRouter       = require('./apps/routes/rayon.routes');
 const MerekMeterRouter  = require('./apps/routes/merekmeter.routes');
+const DiameterRouter    = require('./apps/routes/diameter.routes');
+const KecamatanRouter   = require('./apps/routes/kecamatan.routes');
+const KeluarahanRouter  = require('./apps/routes/kelurahan.routes');
 
 const app = express();
 
@@ -40,6 +43,9 @@ app.use('/v1/wilayah', WilayahRouter);
 app.use('/v1/jalan', JalanRouter);
 app.use('/v1/rayon', RayonRouter);
 app.use('/v1/merek-meter', MerekMeterRouter);
+app.use('/v1/diameter', DiameterRouter);
+app.use('/v1/kecamatan', KecamatanRouter);
+app.use('/v1/kelurahan', KeluarahanRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({
