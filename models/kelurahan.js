@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      kelurahan.belongsTo(models.kecamatan, {foreignKey : 'kec_id'});
     }
   }
   kelurahan.init({
