@@ -1,6 +1,6 @@
 const { tarif, golongan }       = require('../../models');
 
-module.exports = class MateraiController {
+module.exports = class TarifController {
   static async getAll(req, res, next) {
     try {
       const data = await tarif.findAll({
