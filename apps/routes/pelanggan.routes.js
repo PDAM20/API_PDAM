@@ -1,6 +1,8 @@
 const router        = require('express').Router();
 const controller    = require('../controllers/pelanggan.controller');
+const verifyToken   = require('../middlewares/verifyToken');
 
+router.get('/', verifyToken, controller.getAllByPetugas);
 router.get('/', controller.getAll);
 router.get('/:id', controller.getDetail);
 router.post('/', controller.createPelanggan);

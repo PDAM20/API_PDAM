@@ -1,49 +1,67 @@
-const { tb_pelanggan, tb_kelainan }     = require('../../models');
-const multer = require('multer');
-const upload = require('../helper/multer').fields([
-  { name: 'gambar_meter', maxCount: 1 },
-  { name: 'gambar_rumah', maxCount: 1 },
-  { name: 'video_meter', maxCount: 1 },
-]);
+const { pelanggan, merekmeter, golongan, wilayah, rayon, jalan, diameter, kecamatan, kelurahan }     = require('../../models');
 
 module.exports = class PelangganController {
-  static async getAll(req, res, next) {
+  static async getAllByPetugas(req, res, next) {
     try {
-      const option = {
-        attributes: ['id', 'kode_pelanggan', 'nama', 'rayon'],
-        include : [
-          {
-            model: tb_kelainan,
-            attributes: ['nama_kelainan']
-          }
-        ]
-      }
-      const data = await tb_pelanggan.findAll(option)
-      
+      let { page, limit } = req.query;
+      const Petugas       = req.user;
+      return console.log(Petugas.nama);
+  
+      page = parseInt(page) || 1;
+      limit = parseInt(limit) || 10; 
+  
+      const offset = (page - 1) * limit;
+  
+      const data = await pelanggan.findAll({
+        attributes: ['id', 'nama', 'no_pelanggan', 'alamat'],
+        offset: offset,
+        limit: limit
+      });
+  
       return res.status(200).json({
         success: true,
         message: "success get all data",
         data: data
-      })
+      });
     } catch (error) {
       res.json(error.message);
-      next(error)
+      next(error);
     }
-  }
+  } 
+
+  static async getAll(req, res, next) {
+    try {
+      let { page, limit } = req.query;
+  
+      page = parseInt(page) || 1;
+      limit = parseInt(limit) || 10; 
+  
+      const offset = (page - 1) * limit;
+  
+      const data = await pelanggan.findAll({
+        attributes: ['id', 'nama', 'no_pelanggan', 'alamat'],
+        offset: offset,
+        limit: limit
+      });
+  
+      return res.status(200).json({
+        success: true,
+        message: "success get all data",
+        data: data
+      });
+    } catch (error) {
+      res.json(error.message);
+      next(error);
+    }
+  }  
 
   static async getDetail(req, res, next) {
     try {
       const id = req.params.id;
-      const data = await tb_pelanggan.findOne({
+      const data = await pelanggan.findOne({
         where: {
           id: id
-        }, 
-        include : [
-          {
-            model: tb_kelainan,
-            attributes: ['nama_kelainan']
-          }
-        ]})
+        }})
 
       if (!data) {
         return res.status(404).json({
@@ -65,16 +83,9 @@ module.exports = class PelangganController {
 
   static async createPelanggan(req,res, next) {
     try {
-      const { kode_pelanggan, nama, alamat, air_sl, air_habis, rayon } = req.body;
-      
-      await tb_pelanggan.create({kode_pelanggan, nama, alamat, air_sl, air_habis, rayon})
-      .catch((err) => {
-        return res.status(400).json({
-          success: false,
-          message: err.message
-        })
-      })
+      const { status, no_pelanggan, no_lama, no_kartu, nama, alamat, tmp_lahir, tgl_lahir, no_ktp, no_kk, no_telp, no_hp, email, pekerjaan, jumlah_penghuni, jenis_bangunan, kepemilikan, nama_pemilik, merek_id, no_meter, golongan_id, wilayah_id, rayon_id, jalan_id, diameter_id, kec_id, kel_id, latitude, longitude, tgl_pasif, tgl_pasang, tgl_aktif, mbr, urutanbaca } = req.body;
 
+      await pelanggan.create({status, no_pelanggan, no_lama, no_kartu, nama, alamat, tmp_lahir, tgl_lahir, no_ktp, no_kk, no_telp, no_hp, email, pekerjaan, jumlah_penghuni, jenis_bangunan, kepemilikan, nama_pemilik, merek_id, no_meter, golongan_id, wilayah_id, rayon_id, jalan_id, diameter_id, kec_id, kel_id, latitude, longitude, tgl_pasif, tgl_pasang, tgl_aktif, mbr, urutanbaca})
       return res.status(200).json({
         success: true,
         message: "succcess create"
@@ -86,67 +97,33 @@ module.exports = class PelangganController {
   }
 
   static async updatePelanggan(req, res, next) {
-    upload(req, res, async function (err) {
-      try {
-        const id = req.params.id;
-        const { id_kelainan, nama, air_sl, air_habis } = req.body;
-        
-        if (err instanceof multer.MulterError) {
-          return res.status(422).json({
-            success: false,
-            message: err.message
-          })
-        } else if (err) {
-          return res.status(422).json({
-            success: false,
-            message: err.message
-          })
-        }
-        
-        const dt = await tb_pelanggan.findOne({ where: { id: id } });
-        if (dt == null) {
-          return res.status(404).json({
-            success: false,
-            message: "data not found"
-          });
-        }
-        
-        const data = await tb_kelainan.findOne({ where: { id: id_kelainan }})
-        if (data == null) {
-          return res.status(404).json({
-            success: false,
-            message: `kelainan with id ${id_kelainan} is empty`
-          })
-        }
-        
-        let urls = req.files
-        for (const url in urls) {
-          let urlTmp = urls[url][0].path.split('\\')
-          urlTmp.shift()
-          dt[url] = urlTmp.join('/')
-          console.log("disini " + dt[url]);
-          await dt.save();
-        }
-
-        await tb_pelanggan.update({id_kelainan, nama, air_sl, air_habis}, {
-          where: {
-            id: id
-          }})
-
-        return res.status(200).json({
-          success: true,
-          message: "success update"
+    try {
+      const id = req.params.id;
+      const { status, no_pelanggan, no_lama, no_kartu, nama, alamat, tmp_lahir, tgl_lahir, no_ktp, no_kk, no_telp, no_hp, email, pekerjaan, jumlah_penghuni, jenis_bangunan, kepemilikan, nama_pemilik, merek_id, no_meter, golongan_id, wilayah_id, rayon_id, jalan_id, diameter_id, kec_id, kel_id, latitude, longitude, tgl_pasif, tgl_pasang, tgl_aktif, mbr, urutanbaca } = req.body;
+      
+      const dt = await pelanggan.findOne({ where: { id: id } });
+      if (dt == null) {
+        return res.status(404).json({
+          success: false,
+          message: "data not found"
         });
-      } catch (error) {
-        console.error(error.message);
-        next(error); 
       }
-  
-      // Everything went fine.
-    })
+      
+      await pelanggan.update({status, no_pelanggan, no_lama, no_kartu, nama, alamat, tmp_lahir, tgl_lahir, no_ktp, no_kk, no_telp, no_hp, email, pekerjaan, jumlah_penghuni, jenis_bangunan, kepemilikan, nama_pemilik, merek_id, no_meter, golongan_id, wilayah_id, rayon_id, jalan_id, diameter_id, kec_id, kel_id, latitude, longitude, tgl_pasif, tgl_pasang, tgl_aktif, mbr, urutanbaca}, {
+        where: {
+          id: id
+        }})
+
+      return res.status(200).json({
+        success: true,
+        message: "success update"
+      });
+    } catch (error) {
+      console.error(error.message);
+      next(error); 
+    }
   }
   
-
   static async delete(req, res, next) {
     try {
       const id = req.params.id;
