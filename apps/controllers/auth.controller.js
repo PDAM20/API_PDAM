@@ -31,7 +31,7 @@ module.exports = class AuthController {
             })
             return res.json({
               success: true,
-              token: token
+              token: "Bearer ".concat(token)
             })
           } else {
             return res.status(403).json({
