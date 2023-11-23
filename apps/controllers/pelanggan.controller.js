@@ -47,6 +47,7 @@ module.exports = class PelangganController {
       return res.status(200).json({
         success: true,
         message: "success get all data",
+        total : data.length,
         data: data
       });
     } catch (error) {
