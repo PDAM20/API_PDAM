@@ -1,19 +1,29 @@
-const { pelanggan, merekmeter, golongan, wilayah, rayon, jalan, diameter, kecamatan, kelurahan }     = require('../../models');
+const { pelanggan, rutebaca_petugas_r, merekmeter, golongan, wilayah, rayon, jalan, diameter, kecamatan, kelurahan }     = require('../../models');
 
 module.exports = class PelangganController {
   static async getAllByPetugas(req, res, next) {
     try {
       let { page, limit } = req.query;
       const Petugas       = req.user;
-      return console.log(Petugas.nama);
   
       page = parseInt(page) || 1;
       limit = parseInt(limit) || 10; 
   
       const offset = (page - 1) * limit;
   
+      const dt_petugas = await rutebaca_petugas_r.findAll({
+        where: {
+          petugas_id: Petugas.id
+        }
+      })
+      
+      const rayonId = dt_petugas.map(item => item.rayon_id);
+      
       const data = await pelanggan.findAll({
         attributes: ['id', 'nama', 'no_pelanggan', 'alamat'],
+        where: {
+          rayon_id: rayonId
+        },
         offset: offset,
         limit: limit
       });
@@ -21,6 +31,7 @@ module.exports = class PelangganController {
       return res.status(200).json({
         success: true,
         message: "success get all data",
+        total: data.length,
         data: data
       });
     } catch (error) {
