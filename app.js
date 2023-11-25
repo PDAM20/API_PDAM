@@ -20,6 +20,8 @@ const MerekMeterRouter  = require('./apps/routes/merekmeter.routes');
 const DiameterRouter    = require('./apps/routes/diameter.routes');
 const KecamatanRouter   = require('./apps/routes/kecamatan.routes');
 const KeluarahanRouter  = require('./apps/routes/kelurahan.routes');
+const HasilbacaRouter   = require('./apps/routes/hasilbacas.routes');
+const PeriodeRouter     = require('./apps/routes/periode.routes');
 
 const app = express();
 
@@ -46,6 +48,8 @@ app.use('/v1/merek-meter', MerekMeterRouter);
 app.use('/v1/diameter', DiameterRouter);
 app.use('/v1/kecamatan', KecamatanRouter);
 app.use('/v1/kelurahan', KeluarahanRouter);
+app.use('/v1/hasilbaca', HasilbacaRouter);
+app.use('/v1/periode', PeriodeRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({
