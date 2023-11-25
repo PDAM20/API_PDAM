@@ -5,13 +5,11 @@ module.exports = class PelangganController {
     try {
       const Petugas = req.user.id;
       const Periode = req.params.tahunbln;
-      const [results, _] = await sequelize.query(`SELECT a.*, IFNULL(b.jml, 0) AS jml FROM rutebaca_petugas_rs a
-        LEFT JOIN (
-          SELECT COUNT(no_pelanggan) AS jml, rayon_id FROM hasilbacas WHERE 
-          periode=${Periode} AND flagaktif=0 AND sudahbaca=FALSE AND flagreq_bc_ulang=0 AND verifikasi=FALSE 
-          GROUP BY rayon_id
-        ) b ON a.rayon_id=b.rayon_id
-        WHERE a.petugas_id = ${Petugas}`);
+      const [results, _] = await sequelize.query(`SELECT a.rayon_id, hasilbacas.kode_rayon, COUNT(hasilbacas.no_pelanggan) AS jml_pelanggan
+      FROM rutebaca_petugas_rs a
+      LEFT JOIN hasilbacas ON a.rayon_id = hasilbacas.rayon_id
+      WHERE a.petugas_id = ${Petugas} AND hasilbacas.periode=${Periode} AND hasilbacas.flagaktif=0 AND hasilbacas.sudahbaca=FALSE AND hasilbacas.flagreq_bc_ulang=0 AND hasilbacas.verifikasi=FALSE
+      GROUP BY a.rayon_id, hasilbacas.kode_rayon;`);
       
       return res.status(200).json({
         success: true,
