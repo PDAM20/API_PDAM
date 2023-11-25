@@ -1,4 +1,4 @@
-const { sequelize } = require('../../models');
+const { sequelize, hasilbaca } = require('../../models');
 
 module.exports = class PelangganController {
   static async getAllByPetugas(req, res, next) {
@@ -24,6 +24,35 @@ module.exports = class PelangganController {
     }
   } 
 
+  static async getDetailKonformasi(req, res, next) {
+    try {
+      const Periode = req.params.tahunbln;
+      const rayon_id = req.params.rayon_id;
+      let { page, limit } = req.query;
+  
+      page = parseInt(page) || 1;
+      limit = parseInt(limit) || 10; 
+  
+      const offset = (page - 1) * limit;
+
+      const [results, _] = await sequelize.query(`SELECT * FROM hasilbacas
+      WHERE periode = ${Periode} AND flagaktif = 0 AND sudahbaca = FALSE 
+      AND flagreq_bc_ulang = 0 AND verifikasi = FALSE AND rayon_id = ${rayon_id}
+      LIMIT ${limit} OFFSET ${offset}`);
+
+      return res.status(200).json({
+        success: true,
+        message: "success get all data",
+        total: results.length,
+        data: results
+      });
+      
+    } catch (error) {
+      res.json(error.message);
+      next(error);
+    }
+  } 
+
   static async getAll(req, res, next) {
     try {
       let { page, limit } = req.query;
@@ -33,7 +62,7 @@ module.exports = class PelangganController {
   
       const offset = (page - 1) * limit;
   
-      const data = await pelanggan.findAll({
+      const data = await hasilbaca.findAll({
         attributes: ['id', 'nama', 'no_pelanggan', 'alamat'],
         offset: offset,
         limit: limit
@@ -54,7 +83,7 @@ module.exports = class PelangganController {
   static async getDetail(req, res, next) {
     try {
       const id = req.params.id;
-      const data = await pelanggan.findOne({
+      const data = await hasilbaca.findOne({
         where: {
           id: id
         }})
@@ -77,11 +106,11 @@ module.exports = class PelangganController {
     }
   }
 
-  static async createPelanggan(req,res, next) {
+  static async create(req,res, next) {
     try {
       const { status, no_pelanggan, no_lama, no_kartu, nama, alamat, tmp_lahir, tgl_lahir, no_ktp, no_kk, no_telp, no_hp, email, pekerjaan, jumlah_penghuni, jenis_bangunan, kepemilikan, nama_pemilik, merek_id, no_meter, golongan_id, wilayah_id, rayon_id, jalan_id, diameter_id, kec_id, kel_id, latitude, longitude, tgl_pasif, tgl_pasang, tgl_aktif, mbr, urutanbaca } = req.body;
 
-      await pelanggan.create({status, no_pelanggan, no_lama, no_kartu, nama, alamat, tmp_lahir, tgl_lahir, no_ktp, no_kk, no_telp, no_hp, email, pekerjaan, jumlah_penghuni, jenis_bangunan, kepemilikan, nama_pemilik, merek_id, no_meter, golongan_id, wilayah_id, rayon_id, jalan_id, diameter_id, kec_id, kel_id, latitude, longitude, tgl_pasif, tgl_pasang, tgl_aktif, mbr, urutanbaca})
+      await hasilbaca.create({status, no_pelanggan, no_lama, no_kartu, nama, alamat, tmp_lahir, tgl_lahir, no_ktp, no_kk, no_telp, no_hp, email, pekerjaan, jumlah_penghuni, jenis_bangunan, kepemilikan, nama_pemilik, merek_id, no_meter, golongan_id, wilayah_id, rayon_id, jalan_id, diameter_id, kec_id, kel_id, latitude, longitude, tgl_pasif, tgl_pasang, tgl_aktif, mbr, urutanbaca})
       return res.status(200).json({
         success: true,
         message: "succcess create"
@@ -92,12 +121,12 @@ module.exports = class PelangganController {
     }
   }
 
-  static async updatePelanggan(req, res, next) {
+  static async update(req, res, next) {
     try {
       const id = req.params.id;
       const { status, no_pelanggan, no_lama, no_kartu, nama, alamat, tmp_lahir, tgl_lahir, no_ktp, no_kk, no_telp, no_hp, email, pekerjaan, jumlah_penghuni, jenis_bangunan, kepemilikan, nama_pemilik, merek_id, no_meter, golongan_id, wilayah_id, rayon_id, jalan_id, diameter_id, kec_id, kel_id, latitude, longitude, tgl_pasif, tgl_pasang, tgl_aktif, mbr, urutanbaca } = req.body;
       
-      const dt = await pelanggan.findOne({ where: { id: id } });
+      const dt = await hasilbaca.findOne({ where: { id: id } });
       if (dt == null) {
         return res.status(404).json({
           success: false,
@@ -105,7 +134,7 @@ module.exports = class PelangganController {
         });
       }
       
-      await pelanggan.update({status, no_pelanggan, no_lama, no_kartu, nama, alamat, tmp_lahir, tgl_lahir, no_ktp, no_kk, no_telp, no_hp, email, pekerjaan, jumlah_penghuni, jenis_bangunan, kepemilikan, nama_pemilik, merek_id, no_meter, golongan_id, wilayah_id, rayon_id, jalan_id, diameter_id, kec_id, kel_id, latitude, longitude, tgl_pasif, tgl_pasang, tgl_aktif, mbr, urutanbaca}, {
+      await hasilbaca.update({status, no_pelanggan, no_lama, no_kartu, nama, alamat, tmp_lahir, tgl_lahir, no_ktp, no_kk, no_telp, no_hp, email, pekerjaan, jumlah_penghuni, jenis_bangunan, kepemilikan, nama_pemilik, merek_id, no_meter, golongan_id, wilayah_id, rayon_id, jalan_id, diameter_id, kec_id, kel_id, latitude, longitude, tgl_pasif, tgl_pasang, tgl_aktif, mbr, urutanbaca}, {
         where: {
           id: id
         }})
@@ -124,7 +153,7 @@ module.exports = class PelangganController {
     try {
       const id = req.params.id;
 
-      const dt = await tb_pelanggan.findOne({ where: { id: id }})
+      const dt = await hasilbaca.findOne({ where: { id: id }})
       if (dt == null) {
         return res.status(404).json({
           success: false,
@@ -132,7 +161,7 @@ module.exports = class PelangganController {
         })
       }
 
-      await tb_pelanggan.destroy({where: { id: id }})
+      await hasilbaca.destroy({where: { id: id }})
       return res.status(200).json({
         success: true,
         message: "success delete"
