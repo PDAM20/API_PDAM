@@ -24,6 +24,29 @@ module.exports = class PelangganController {
     }
   } 
 
+  static async getAllByPetugasBacaUlang(req, res, next) {
+    try {
+      const Petugas = req.user.id;
+      const Periode = req.params.tahunbln;
+      const [results, _] = await sequelize.query(`SELECT a.rayon_id, hasilbacas.kode_rayon, COUNT(hasilbacas.no_pelanggan) AS jml_pelanggan
+      FROM rutebaca_petugas_rs a
+      LEFT JOIN hasilbacas ON a.rayon_id = hasilbacas.rayon_id
+      WHERE a.petugas_id = ${Petugas} AND hasilbacas.periode=${Periode} AND hasilbacas.flagaktif=0 AND hasilbacas.sudahbaca=TRUE AND hasilbacas.flagreq_bc_ulang=1 AND hasilbacas.verifikasi=FALSE
+      GROUP BY a.rayon_id, hasilbacas.kode_rayon;`);
+      
+      return res.status(200).json({
+        success: true,
+        message: "success get all data",
+        total: results.length,
+        data: results
+      });
+      
+    } catch (error) {
+      res.json(error.message);
+      next(error);
+    }
+  } 
+
   static async getDetailKonformasi(req, res, next) {
     try {
       const Periode = req.params.tahunbln;
@@ -52,6 +75,36 @@ module.exports = class PelangganController {
       next(error);
     }
   } 
+
+  static async getDetailKonformasiBacaUlang(req, res, next) {
+    try {
+      const Periode = req.params.tahunbln;
+      const rayon_id = req.params.rayon_id;
+      let { page, limit } = req.query;
+  
+      page = parseInt(page) || 1;
+      limit = parseInt(limit) || 10; 
+  
+      const offset = (page - 1) * limit;
+
+      const [results, _] = await sequelize.query(`SELECT * FROM hasilbacas
+      WHERE periode = ${Periode} AND flagaktif = 0 AND sudahbaca = TRUE 
+      AND flagreq_bc_ulang = 1 AND verifikasi = FALSE AND rayon_id = ${rayon_id}
+      LIMIT ${limit} OFFSET ${offset}`);
+
+      return res.status(200).json({
+        success: true,
+        message: "success get all data",
+        total: results.length,
+        data: results
+      });
+      
+    } catch (error) {
+      res.json(error.message);
+      next(error);
+    }
+  } 
+
 
   static async getAll(req, res, next) {
     try {
