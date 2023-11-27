@@ -51,17 +51,10 @@ module.exports = class PelangganController {
     try {
       const Periode = req.params.tahunbln;
       const rayon_id = req.params.rayon_id;
-      let { page, limit } = req.query;
-  
-      page = parseInt(page) || 1;
-      limit = parseInt(limit) || 10; 
-  
-      const offset = (page - 1) * limit;
 
       const [results, _] = await sequelize.query(`SELECT * FROM hasilbacas
       WHERE periode = ${Periode} AND flagaktif = 0 AND sudahbaca = FALSE 
-      AND flagreq_bc_ulang = 0 AND verifikasi = FALSE AND rayon_id = ${rayon_id}
-      LIMIT ${limit} OFFSET ${offset}`);
+      AND flagreq_bc_ulang = 0 AND verifikasi = FALSE AND rayon_id = ${rayon_id}`);
 
       return res.status(200).json({
         success: true,
@@ -80,17 +73,10 @@ module.exports = class PelangganController {
     try {
       const Periode = req.params.tahunbln;
       const rayon_id = req.params.rayon_id;
-      let { page, limit } = req.query;
-  
-      page = parseInt(page) || 1;
-      limit = parseInt(limit) || 10; 
-  
-      const offset = (page - 1) * limit;
 
       const [results, _] = await sequelize.query(`SELECT * FROM hasilbacas
       WHERE periode = ${Periode} AND flagaktif = 0 AND sudahbaca = TRUE 
-      AND flagreq_bc_ulang = 1 AND verifikasi = FALSE AND rayon_id = ${rayon_id}
-      LIMIT ${limit} OFFSET ${offset}`);
+      AND flagreq_bc_ulang = 1 AND verifikasi = FALSE AND rayon_id = ${rayon_id}`);
 
       return res.status(200).json({
         success: true,
